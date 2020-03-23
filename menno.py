@@ -12,11 +12,11 @@ app.config['MONGO_URI'] = 'mongodb+srv://pepijn:pepijn@menno-cluster-miz8h.mongo
 # Variabel PyMongo App
 mongo = PyMongo(app)
 
-# Flask Route - Members \ GET all documents from 'Members Collection'.
-@app.route('/members', methods=['GET'])
-# Function 'get_all_members'
-def get_all_members():
-    framework = mongo.db.members
+# Flask Route - Users \ GET all documents from 'Users Collection'.
+@app.route('/users', methods=['GET'])
+# Function 'get_all_users' - Vraag alle gebruikers op
+def get_all_users():
+    framework = mongo.db.users
 
     output = []
 
@@ -25,33 +25,34 @@ def get_all_members():
     # Return the output in JSON
     return jsonify({'result': output})
 
-# Flask Route - Members \ GET specified document based on <name> from 'Members Collection'.
-@app.route('/members/<name>', methods=['GET'])
-# Function 'get_one_framework'
-def get_one_framework(name):
-    framework = mongo.db.members
+# Flask Route - Users \ GET specified document based on <name> from 'Users Collection'.
+@app.route('/users/<name>', methods=['GET'])
+# Function 'get_one_user' - Vraag gegevens van 1 gebruiker op
+def get_one_user(name):
+    users = mongo.db.users
 
-    q = framework.find_one({'voornaam': name})
+    q = users.find_one({'voornaam': name})
 
     if q:
         output = {'voornaam': q['voornaam'], 'achternaam': q['achternaam']}
     else:
-        output = 'Sorry. We konden geen resultaten vinden...'
+        output = 'Sorry! We konden geen gebruikers vinden.'
     # Return the output in JSON
     return jsonify({'result': output})
 
-# Flask Route - Members \ POST specified document based on <name> and <language> to 'Members Collection'.
-@app.route('/members', methods=['POST'])
-def add_framework():
-    framework = mongo.db.members
+# Flask Route - Users \ POST specified document based on <name> and <language> to 'Users Collection'.
+@app.route('/users', methods=['POST'])
+# Function 'add_user' - Voeg een gebruiker toe op basis van JSON
+def add_user():
+    users = mongo.db.users
 
-    name = request.json['voornaam']
-    language = request.json['achternaam']
+    voornaam = request.json['voornaam']
+    achternaam = request.json['achternaam']
 
-    framework_id = framework.insert_one({'voornaam': name, 'achternaam': language})
-    new_framework = framework.find_one({'_id': framework_id})
+    users_id = users.insert_one({'voornaam': voornaam, 'achternaam': achternaam})
+    new_users = users.find_one({'_id': users_id})
 
-    output = {'voornaam': new_framework['voornaam'], 'achternaam': new_framework['achternaam']}
+    output = {'voornaam': new_users['voornaam'], 'achternaam': new_users['achternaam']}
     # Return the output in JSON
     return jsonify({'result': output})
 
