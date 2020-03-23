@@ -1,4 +1,4 @@
-# Importeer: Flask, JSONify, Requests + Flask_PyMongo en PyMongo
+# Importeer: Flask, JSONify, Requests, DNSpython + Flask_PyMongo en PyMongo
 from flask import Flask, jsonify, request
 from flask_pymongo import PyMongo
 
