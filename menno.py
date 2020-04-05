@@ -17,8 +17,8 @@ auth_users = {
 
 # MongoDB Instellingen
 app.config['MONGO_DBNAME'] = 'menno' # MongoDB naam
-#app.config['MONGO_URI'] = 'mongodb+srv://pepijn:pepijn@menno-cluster-miz8h.mongodb.net/menno' # MongoDB bij MongoDB Atlas op AWS
-app.config['MONGO_URI'] = 'mongodb://mongo0.mikevdbrink.nl:27017,mongo1.mikevdbrink.nl:27017,mongo2.mikevdbrink.nl:27017/menno?replicaSet=cloud' # MongoDB Bij Google Cloud Platform (GPC)
+app.config['MONGO_URI'] = 'mongodb+srv://pepijn:pepijn@menno-cluster-miz8h.mongodb.net/menno' # MongoDB bij MongoDB Atlas op AWS
+#app.config['MONGO_URI'] = 'mongodb://mongo0.mikevdbrink.nl:27017,mongo1.mikevdbrink.nl:27017,mongo2.mikevdbrink.nl:27017/menno?replicaSet=cloud' # MongoDB Bij Google Cloud Platform (GPC)
 mongo = PyMongo(app) # Variabel voor PyMongo
 
 # Authenticatie functie - HTTPAuth op basis van 'auth_users' lijst
