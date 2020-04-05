@@ -1,3 +1,4 @@
 flask
 flask-pymongo
 dnspython
+Flask-HTTPAuth
