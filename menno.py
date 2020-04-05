@@ -60,7 +60,7 @@ def get_one_user(voornaam):
     if q:
         output = {'voornaam': q['voornaam'], 'achternaam': q['achternaam'], 'name': q['name'], 'plaats': q['plaats'], 'provincie': q['provincie'], 'adres': q['adres']}
     else:
-        output = 'Sorry! We konden geen gebruikers vinden.'
+        output = 'Sorry! We konden geen gebruikers vinden op basis van de voornaam die je hebt ingevuld.'
     # Return the output in JSON
     return jsonify({'result': output})
 
@@ -71,15 +71,24 @@ def get_one_user(voornaam):
 def add_user():
     users = mongo.db.users
 
+    # Variablen voor de waardes uit JSON form
     voornaam = request.json['voornaam']
     achternaam = request.json['achternaam']
+    name = request.json['name']
+    adres = request.json['adres']
+    provincie = request.json['provincie']
+    plaats = request.json['plaats']
+    password = request.json['password']
 
-    users_id = users.insert_one({'voornaam': voornaam, 'achternaam': achternaam})
-    new_users = users.find_one({'_id': users_id})
+    # Insert gebruikers in de DB met behulp van variablen uit JSON
+    users_id = users.insert({'name' : name, 'adres' : adres, 'provincie' : provincie, 'plaats' : plaats, 'voornaam' : voornaam, 'achternaam' : achternaam, 'password' : password})
+    new_users = users.find_one({'_id' : users_id}) # Gebruiker _id mongo
 
-    output = {'voornaam': new_users['voornaam'], 'achternaam': new_users['achternaam']}
-    # Return the output in JSON
-    return jsonify({'result': output})
+    # De output van de post request
+    output = {'voornaam' : new_users['voornaam'], 'achternaam' : new_users['achternaam'], 'name' : new_users['name'], 'adres' : new_users['adres'], 'plaats' : new_users['plaats'], 'provincie' : new_users['provincie']}
+    # Return in JSON
+    return jsonify({'result' : output})
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True, ssl_context='adhoc')
